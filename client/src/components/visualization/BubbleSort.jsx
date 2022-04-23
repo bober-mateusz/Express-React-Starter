@@ -2,9 +2,7 @@ import { useD3 } from "../../hooks/useD3";
 import React from "react";
 import * as d3 from "d3";
 import "../../styles/bubbleSortStyle.css";
-import OutputWindow from "../output/OutputWindow.jsx";
-import { useEffect } from "react";
-import { useState } from "react";
+import "../../styles/outputWindow.css";
 var $ = require("jquery");
 var iteration = 0;
 function BubbleSort({ data }) {
@@ -106,7 +104,6 @@ function BubbleSort({ data }) {
 
       function swap(a, b) {
         //Log
-
         //Swap Graphics
         var x0 = scaleX.domain(
           data.map(function (d) {
@@ -114,12 +111,10 @@ function BubbleSort({ data }) {
           })
         );
 
-        var lol = d3.selectAll("rect");
         var firstRectForX = d3.selectAll("rect").nodes()[a];
         var firstRectX = firstRectForX.x.animVal.value;
         var secondRectForX = d3.selectAll("rect").nodes()[b];
         var secondRectX = secondRectForX.x.animVal.value;
-        var container = d3.select(".rectangles");
         var firstRect = d3
           .selectAll("rect")
           .filter(function (d, i) {
@@ -130,7 +125,7 @@ function BubbleSort({ data }) {
           .attr("fill", function (d) {
             return "#FF" + Math.floor(color(d)) + "00";
           })
-          .attr("x", secondRectForX.x.animVal.value)
+          .attr("x", secondRectX)
           .transition()
           .delay(400)
           .duration(350)
@@ -145,7 +140,7 @@ function BubbleSort({ data }) {
           })
           .transition()
           .duration(500)
-          .attr("x", firstRectForX.x.animVal.value)
+          .attr("x", firstRectX)
           .transition();
 
         let firstRectNode = firstRect.nodes()[0];
@@ -185,17 +180,14 @@ function BubbleSort({ data }) {
         for (let i = 0; i < len; i++) {
           for (let j = 0; j < len - 1; j++) {
             let tmp = sort(inputArr[j], inputArr[j + 1]);
-
             if (tmp != null) {
               let one = inputArr[j];
               let two = inputArr[j + 1];
               setTimeout(function () {
                 SwapLog(one, two);
               }, delay);
-              let nextSwap = inputArr[j + 1];
               inputArr[j] = inputArr[j + 1];
               inputArr[j + 1] = tmp;
-
               setTimeout(function () {
                 swap(j, j + 1);
               }, delay);

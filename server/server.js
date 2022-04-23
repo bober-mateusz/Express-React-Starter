@@ -9,6 +9,9 @@ app.use(cors());
 // parse application/json
 app.use(bodyParser.json());
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
 app.post("/post-test", (req, res) => {
   let data = { name: req.body.name };
   console.log(req.headers);
@@ -16,7 +19,7 @@ app.post("/post-test", (req, res) => {
   res.sendStatus(200);
 });
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 //Start the server
 app.listen(port, () => console.log(`server started on port 5000`));
 

@@ -1,8 +1,4 @@
-//Components
-import Customers from "./components/customers/customers.jsx";
-import Codeeditor from "./components/input/Codeeditor.jsx";
 import Navbar from "./components/navbar/navbar.jsx";
-import Output from "./components/output/output.jsx";
 import BubbleSort from "./components/visualization/BubbleSort.jsx";
 
 //Data

@@ -40,4 +40,5 @@ code:before {
 }
 code:before {
   -webkit-user-select: none;
+  user-select: none;
 }
