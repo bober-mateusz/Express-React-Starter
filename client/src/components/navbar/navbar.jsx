@@ -5,17 +5,15 @@ class Navbar extends Component {
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand">Navbar</a>
+        <a className="navbar-brand">Algo-Visualizer</a>
         <ul className="navbar-nav mr-auto">
-          <Link to="/register">
-            <li className="nav-item">
-              <span className="nav-link">Register</span>
-            </li>
-          </Link>
+          {/* <Link to="/register">
+
+          </Link> */}
           <li className="nav-item">
-            <Link to="/login">
+            {/* <Link to="/login">
               <span className="nav-link">Login</span>
-            </Link>
+            </Link> */}
           </li>
         </ul>
       </nav>

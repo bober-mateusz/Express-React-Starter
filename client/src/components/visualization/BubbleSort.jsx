@@ -224,6 +224,7 @@ function BubbleSort({ data }) {
   );
   return (
     <div className="container-fluid">
+      <h3>BubbleSort Visualization</h3>
       <div className="row">
         <div className="col-1">
           <button
