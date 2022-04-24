@@ -2,8 +2,15 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const mongoose = require("mongoose");
 
 const app = express();
+const dbURI =
+  "mongodb+srv://matBob123:Hashbit123@projectdb.n14aw.mongodb.net/FYP-DB?retryWrites=true&w=majority";
+mongoose
+  .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then((result) => console.log("connected to db"))
+  .catch((err) => console.log(err));
 
 app.use(cors());
 // parse application/json
@@ -12,6 +19,7 @@ app.use(bodyParser.json());
 const port = process.env.PORT || 5000;
 //Start the server
 
+//Start
 app.use(express.static(path.join(__dirname, "..", "client", "build")));
 
 app.get("/", function (req, res) {
