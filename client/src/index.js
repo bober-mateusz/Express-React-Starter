@@ -5,13 +5,16 @@ import "bootstrap/dist/css/bootstrap.css";
 import reportWebVitals from "./reportWebVitals";
 import { render } from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./routes/Login.jsx";
+import Register from "./routes/Register.jsx";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          {" "}
+          <Route path="register" element={<Login />} />
+          <Route path="login" element={<Register />} />
         </Route>
       </Routes>
     </BrowserRouter>

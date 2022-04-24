@@ -11,6 +11,7 @@
   line-height: 1.2em;
   overflow: auto;
   overflow-y: auto;
+  min-width: 250px;
 }
 code:after {
   content: "\a";

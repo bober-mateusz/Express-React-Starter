@@ -4,12 +4,9 @@ import * as d3 from "d3";
 import "../../styles/bubbleSortStyle.css";
 import "../../styles/outputWindow.css";
 var $ = require("jquery");
-var iteration = 0;
 function BubbleSort({ data }) {
   const ref = useD3(
     (svg) => {
-      const MAX = 50;
-      const MIN = 0;
       var data = [14, 2, 42, 17, 28, 12, 11, 18, 47, 19, 32, 46, 39, 34];
       var letterAxis = [
         "A",
@@ -100,7 +97,28 @@ function BubbleSort({ data }) {
         .attr("width", scaleX.bandwidth())
         .attr("fill", function (d) {
           return "#44" + Math.floor(color(d)) + "f4";
+        })
+        .on("mouseover", function (e, d) {
+          d3.select("#tooltip")
+            .transition()
+            .duration(200)
+            .style("opacity", 1)
+            .style("color", "red")
+            .text(d);
+        })
+        .on("mouseout", function (e, d) {
+          d3.select("#tooltip").style("opacity", 0);
+        })
+        .on("mousemove", function (e, d) {
+          d3.select("#tooltip")
+            .style("left", e.pageX + 15 + "px")
+            .style("top", e.pageY + 15 + "px");
         });
+
+      d3.select("body")
+        .append("div")
+        .attr("id", "tooltip")
+        .attr("style", "position:absolute;opacity 0");
 
       function swap(a, b) {
         //Log
@@ -149,8 +167,11 @@ function BubbleSort({ data }) {
         let jqSecondNode = $(secondRectNode);
         jqFirstNode.insertAfter(jqSecondNode);
       }
-      d3.select("button").on("click", function () {
+      d3.select("#Run").on("click", function () {
         data = sorting(data);
+      });
+      d3.select("#Reset").on("click", function () {
+        reset();
       });
 
       var swapArray = [];
@@ -160,7 +181,6 @@ function BubbleSort({ data }) {
           let s = ` ${a} Swaps With ${b} `;
           swapArray = [...swapArray, s];
         }
-
         d3.select(".OutputWindow")
           .selectAll("code")
           .data(swapArray)
@@ -173,7 +193,6 @@ function BubbleSort({ data }) {
           return a;
         }
       }
-
       function sorting(inputArr) {
         let len = inputArr.length;
         let delay = 250;
@@ -183,12 +202,12 @@ function BubbleSort({ data }) {
             if (tmp != null) {
               let one = inputArr[j];
               let two = inputArr[j + 1];
-              setTimeout(function () {
+              let t1 = setTimeout(function () {
                 SwapLog(one, two);
               }, delay);
               inputArr[j] = inputArr[j + 1];
               inputArr[j + 1] = tmp;
-              setTimeout(function () {
+              let t2 = setTimeout(function () {
                 swap(j, j + 1);
               }, delay);
               delay = delay + 650;
@@ -197,29 +216,45 @@ function BubbleSort({ data }) {
         }
         return inputArr;
       }
+      function reset() {
+        window.location.reload(true);
+      }
     },
     [5]
   );
-
   return (
     <div className="container-fluid">
-      <button
-        className="btn btn-primary mb-2"
-        width="5%"
-        type="button"
-        id="button"
-      >
-        Run
-      </button>
+      <div className="row">
+        <div className="col-1">
+          <button
+            className="btn btn-primary mb-2"
+            width="5%"
+            type="button"
+            id="Run"
+          >
+            Run
+          </button>
+          <button
+            className="btn btn-primary mb-2"
+            width="5%"
+            type="button"
+            id="Reset"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
       <div className="row">
         <div className="col-6">
           {/* Bubble sort is visualized in canvas property */}
           <div id="canvas"></div>
         </div>
-        <div className="col-4 mt-5">
-          <div className="container OutputWindow">
-            <h3 className="outputHeader">Output Window</h3>
-            <pre></pre>
+        <div className="row px-5">
+          <div className="col-4  mt-5">
+            <div className="container OutputWindow pl-5">
+              <h3 className="outputHeader">Output Window</h3>
+              <pre></pre>
+            </div>
           </div>
         </div>
       </div>
